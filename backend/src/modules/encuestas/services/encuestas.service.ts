@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateEncuestaDTO } from '../dtos/create-encuesta.dto';
+import { CreateEncuestaDTO } from '../dtos/createEncuestas/create-encuesta.dto';
 import { Encuesta } from '../entities/encuesta.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

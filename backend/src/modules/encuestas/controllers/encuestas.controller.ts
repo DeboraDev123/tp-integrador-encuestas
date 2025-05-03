@@ -1,7 +1,7 @@
 
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { EncuestasService } from '../services/encuestas.service';
-import { CreateEncuestaDTO } from '../dtos/create-encuesta.dto';
+import { CreateEncuestaDTO } from '../dtos/createEncuestas/create-encuesta.dto';
 import { Encuesta } from '../entities/encuesta.entity';
 import { ObtenerEncuestaDto } from '../dtos/obtener-encuesta.dto';
 
