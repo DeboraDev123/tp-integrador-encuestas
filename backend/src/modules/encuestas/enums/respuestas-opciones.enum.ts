@@ -1,0 +1,4 @@
+export enum RespuestasOpciones {
+    RESPUESTA_ABIERTAS = 'RESPUESTA_ABIERTAS',
+    RESPUESTA_OPCIONES = 'RESPUESTA_OPCIONES',
+}
