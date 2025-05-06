@@ -21,7 +21,9 @@ export class Opcion {
   @Column()
   numero: number;
 
-  @ManyToOne(() => Pregunta)
+  @ManyToOne(() => Pregunta, (pregunta) => pregunta.opciones, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_preguntas' })
   @Exclude()
   pregunta: Pregunta;

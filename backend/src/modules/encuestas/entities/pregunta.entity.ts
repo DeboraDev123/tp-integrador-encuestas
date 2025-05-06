@@ -27,14 +27,18 @@ export class Pregunta {
   @Column({ type: 'enum', enum: TiposRespuestaEnum })
   tipo: TiposRespuestaEnum;
 
-  @ManyToOne(() => Encuesta, (encuesta) => encuesta.preguntas)
+  @ManyToOne(() => Encuesta, (encuesta) => encuesta.preguntas, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_encuestas' })
   @Exclude()
   encuesta: Encuesta;
 
-  @OneToMany(() => Opcion, (opcion) => opcion.pregunta, { cascade: ['insert'] })
+  @OneToMany(() => Opcion, (opcion) => opcion.pregunta,{
+    onDelete: 'CASCADE',
+  })
   opciones: Opcion[];
 
-  @OneToMany(() => RespuestasAbiertas, (resAbierta) => resAbierta.pregunta , { cascade: ['insert'] })
+  @OneToMany(() => RespuestasAbiertas, (resAbierta) => resAbierta.pregunta)
   respuestasAbiertas: RespuestasAbiertas[];
 }

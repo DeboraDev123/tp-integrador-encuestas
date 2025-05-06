@@ -3,12 +3,12 @@ import {
     OneToMany,
     JoinColumn,
     ManyToOne,
-    PrimaryGeneratedColumn 
-}   from "typeorm";
-import { Exclude } from "class-transformer";
+  PrimaryGeneratedColumn,
+}   from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { Encuesta } from './encuesta.entity';
 import { RespuestasAbiertas } from './respuestas_abiertas.entity';
-import { RespuestasOpciones } from "./respuestas_opciones.entity";
+import { RespuestasOpciones } from './respuestas_opciones.entity';
 
 @Entity({ name: 'respuestas' })
 export class Respuesta {
