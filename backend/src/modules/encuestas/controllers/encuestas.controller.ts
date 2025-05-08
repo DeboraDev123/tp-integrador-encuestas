@@ -1,5 +1,4 @@
-
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { EncuestasService } from '../services/encuestas.service';
 import { CreateEncuestaDTO } from '../dtos/createEncuestas/create-encuesta.dto';
 import { Encuesta } from '../entities/encuesta.entity';
@@ -29,5 +28,10 @@ export class EncuestasController {
       dto.codigo,
       dto.tipo,
     );
+  }
+
+  @Delete('eliminar/:id')
+  async eliminarEncuesta(@Param('id') id: number): Promise<void> {
+    return await this.encuestasService.eliminarEncuesta(id);
   }
 }
