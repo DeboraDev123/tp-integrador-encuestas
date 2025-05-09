@@ -1,5 +1,6 @@
+/* eslint-disable prettier/prettier */      
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateEncuestaDTO } from '../dtos/create-encuesta.dto';
+import { CreateEncuestaDTO } from '../dtos/createEncuestas/create-encuesta.dto';
 import { Encuesta } from '../entities/encuesta.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -65,5 +66,29 @@ export class EncuestasService {
     }
 
     return encuesta;
+  }
+
+  async   eliminarEncuesta(
+    id: number
+  ): Promise<void> {
+    
+    // await this.encuestasRepository
+    // .createQueryBuilder('encuesta')
+    // .delete()
+    // .where("encuesta.id = :id", { id: id })
+    // .execute();
+    
+    await this.encuestasRepository
+      .createQueryBuilder('encuesta')
+      .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
+      .leftJoinAndSelect('pregunta.opciones', 'preguntaOpcion')
+      .where('encuesta.id = :id', { id })
+      .delete()
+      .execute();
+
+    // const encuesta = await query.getOne();
+
+    // await this.encuestasRepository.delete(encuesta);    
+    
   }
 }

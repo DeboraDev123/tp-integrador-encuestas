@@ -3,10 +3,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Pregunta } from './pregunta.entity';
+import { RespuestasOpciones } from './respuestas_opciones.entity';
 
 @Entity({ name: 'opciones' })
 export class Opcion {
@@ -19,8 +21,13 @@ export class Opcion {
   @Column()
   numero: number;
 
-  @ManyToOne(() => Pregunta)
+  @ManyToOne(() => Pregunta, (pregunta) => pregunta.opciones, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_preguntas' })
   @Exclude()
   pregunta: Pregunta;
+
+  @OneToMany(() => RespuestasOpciones, (resOpciones) => resOpciones.opcion)
+  respuestasOpciones: RespuestasOpciones[];
 }

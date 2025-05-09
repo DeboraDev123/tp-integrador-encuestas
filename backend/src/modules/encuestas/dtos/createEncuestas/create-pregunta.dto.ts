@@ -7,7 +7,7 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { TiposRespuestaEnum } from '../enums/tipos-respuesta.enum';
+import { TiposRespuestaEnum } from '../../enums/tipos-respuesta.enum';
 import { Type } from 'class-transformer';
 import { CreateOpcionDTO } from './create-opcion.dto';
 import { ApiProperty } from '@nestjs/swagger';
