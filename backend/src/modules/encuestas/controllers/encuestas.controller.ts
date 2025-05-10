@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/commo
 import { EncuestasService } from '../services/encuestas.service';
 import { CreateEncuestaDTO } from '../dtos/createEncuestas/create-encuesta.dto';
 import { Encuesta } from '../entities/encuesta.entity';
-import { ObtenerEncuestaDto } from '../dtos/obtener-encuesta.dto';
+import { ObtenerEncuestaDto, ParticiparEncuestaDto } from '../dtos/obtener-encuesta.dto';
 
 @Controller('encuestas')
 export class EncuestasController {
@@ -27,6 +27,17 @@ export class EncuestasController {
       id,
       dto.codigo,
       dto.tipo,
+    );
+  }
+
+  @Get(':id/participar')
+  async obtenerPreguntasParaResponder(
+    @Param('id') id: number,
+    @Query() dto: ParticiparEncuestaDto,
+  ): Promise<Encuesta> {
+    return await this.encuestasService.obtenerPreguntasParaResponder(
+      id,
+      dto.codigo,
     );
   }
 

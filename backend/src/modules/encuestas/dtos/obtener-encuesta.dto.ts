@@ -13,3 +13,10 @@ export class ObtenerEncuestaDto {
   @IsNotEmpty()
   tipo: CodigoTipoEnum;
 }
+
+export class ParticiparEncuestaDto {
+  @ApiProperty()
+  @IsUUID('4')
+  @IsNotEmpty()
+  codigo: string;
+}
