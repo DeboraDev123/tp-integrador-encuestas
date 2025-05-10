@@ -85,10 +85,28 @@ export class EncuestasService {
       .where('encuesta.id = :id', { id })
       .delete()
       .execute();
-
     // const encuesta = await query.getOne();
-
     // await this.encuestasRepository.delete(encuesta);    
-    
+  }
+
+
+  async obtenerEncuestaToken(token: string) : Promise<Encuesta> {
+    const encuesta = await this.encuestasRepository.createQueryBuilder('encuesta')
+    .where('encuesta.codigoResultados = :token', { token })
+    .orWhere('encuesta.codigoRespuesta = :token', { token })
+    .getOne();
+
+    if (!encuesta) {
+      throw new BadRequestException('Token no válido');
+    }
+
+    const esResultado = encuesta.codigoResultados === token;
+
+  return this.obtenerEncuesta(
+    encuesta.id,
+    token,
+    esResultado ? CodigoTipoEnum.RESULTADOS : CodigoTipoEnum.RESPUESTA
+  );
+
   }
 }

@@ -12,13 +12,16 @@ export class Encuesta {
   nombre: string;
   @Column({ name: 'codigo_respuestas' })
   codigoRespuesta: string;
+
   @Column({ name: 'codigo_resultados' })
   @Exclude()
   codigoResultados: string;
+  
   @OneToMany(() => Pregunta, (pregunta) => pregunta.encuesta, {
     cascade: ['insert'],
-  })
+  })  
   preguntas: Pregunta[];
+
   @OneToMany(() => Respuesta, (respuesta) => respuesta.encuesta, {
     cascade: ['insert'],
     onDelete: 'CASCADE',
