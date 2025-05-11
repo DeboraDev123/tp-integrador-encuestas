@@ -92,6 +92,19 @@ Este sistema permite crear, responder y visualizar encuestas anónimas, cumplien
 
 ---
 
+### 6. Buscar encuesta por token
+
+- **Metodo:**  `GET`
+- **Ruta:**  `http://localhost:3000/api/v1/encuestas/{token}/ver-resultados`
+- **Descripción:**  Permite buscar una encuesta usando solo el token (puede ser el de participación o el de resultados). Si el token corresponde a `codigoRespuesta`, devuelve la encuesta para responder. Si corresponde a `codigoResultados`, devuelve la encuesta para ver resultados.
+- **Ejemplo de uso:**
+  ```
+  GET http://localhost:3000/api/v1/encuestas/4f0f8681-c099-4eed-acac-a56e400960b0/ver-resultados
+  ```
+- **Respuesta:**  Objeto encuesta con preguntas y opciones, según el tipo de token.
+
+---
+
 ## Notas importantes
 - El sistema es **anónimo**: no requiere login.
 - Si se pierde el enlace de resultados, **no se puede recuperar**.
