@@ -7,6 +7,7 @@ import { Respuesta } from '../entities/respuestas.entity';
 import { RespuestasAbiertas } from '../entities/respuestas_abiertas.entity';
 import { RespuestasOpciones } from '../entities/respuestas_opciones.entity';
 import { ResponderEncuestaDto } from '../dtos/responderEncuestas/responder-encuesta.dto';
+import { CreateRespuestaDto } from "../dtos/responderEncuestas/create-respuesta";
 
 @Injectable()
 export class RespuestasService {
@@ -77,5 +78,33 @@ export class RespuestasService {
       }
     }
   }
-}
 
+  async crearRespuestas(dto: CreateRespuestaDto[], id: number): Promise<Respuesta[]> {
+    const respuestas: Respuesta[] = [];
+    for (const item of dto) {
+      const nuevaRespuesta = this.respuestasRepository.create({
+        encuesta: { id },
+      });
+      await this.respuestasRepository.save(nuevaRespuesta);
+
+      if (item.tipo === 'ABIERTA') {
+        const nuevaRespuestaAbierta = this.respuestasAbiertasRepository.create({
+          texto: item.texto,
+          respuesta: nuevaRespuesta,
+          pregunta: { id: item.idPregunta },
+        });
+        await this.respuestasAbiertasRepository.save(nuevaRespuestaAbierta);
+      } else if (item.tipo === 'OPCION') {
+        const nuevaRespuestaOpcion = this.respuestasOpcionesRepository.create({
+          opcion: { id: item.idOpcion },
+          respuesta: nuevaRespuesta,
+        });
+        await this.respuestasOpcionesRepository.save(nuevaRespuestaOpcion);
+      } else {
+        throw new Error(`Tipo de respuesta no válido: ${item.tipo}`);
+      }
+      respuestas.push(nuevaRespuesta);
+    }
+    return respuestas;
+  }
+}
