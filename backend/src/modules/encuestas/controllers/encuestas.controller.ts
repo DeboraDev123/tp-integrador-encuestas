@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { EncuestasService } from '../services/encuestas.service';
 import { CreateEncuestaDTO } from '../dtos/createEncuestas/create-encuesta.dto';
 import { Encuesta } from '../entities/encuesta.entity';
 import { ObtenerEncuestaDto } from '../dtos/obtener-encuesta.dto';
+import { UpdateEncuestaDTO } from '../dtos/updateEncuestas/update-encuesta.dto';
 
 @Controller('encuestas')
 export class EncuestasController {
@@ -16,6 +17,15 @@ export class EncuestasController {
     codigoResultados: string;
   }> {
     return await this.encuestasService.crearEncuesta(dto);
+  }
+
+  @Put()
+  async modificarEncuesta(@Body() dto: UpdateEncuestaDTO): Promise<{
+    id: number;
+    codigoRespuesta: string;
+    codigoResultados: string;
+  }> {
+    return await this.encuestasService.modificarEncuesta(dto);
   }
 
   @Get(':id')

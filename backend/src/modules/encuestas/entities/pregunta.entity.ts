@@ -34,7 +34,7 @@ export class Pregunta {
   @Exclude()
   encuesta: Encuesta;
 
-  @OneToMany(() => Opcion, (opcion) => opcion.pregunta,{
+  @OneToMany(() => Opcion, (opcion) => opcion.pregunta, {
     onDelete: 'CASCADE',
   })
   opciones: Opcion[];

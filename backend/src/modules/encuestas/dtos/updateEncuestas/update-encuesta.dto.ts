@@ -4,13 +4,19 @@ import {
   ArrayNotEmpty,
   IsArray,
   IsNotEmpty,
+  IsNumber,
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { CreatePreguntaDTO } from './create-pregunta.dto';
+import { CreatePreguntaDTO } from '../createEncuestas/create-pregunta.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateEncuestaDTO {
+export class UpdateEncuestaDTO {
+  @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  id: number;
+
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
