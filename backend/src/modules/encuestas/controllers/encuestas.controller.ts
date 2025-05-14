@@ -44,8 +44,6 @@ export class EncuestasController {
   async eliminarEncuesta(@Param('id') id: number): Promise<void> {
     return await this.encuestasService.eliminarEncuesta(id);
   }
-
-
   @Get(':token/ver-resultados')
   async obtenerEncuestaToken(
     @Param('token') token: string): Promise<Encuesta> {
