@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import { CodigoTipoEnum } from '../enums/codigo-tipo.enum';
+import { UpdateEncuestaDTO } from '../dtos/updateEncuestas/update-encuesta.dto';
 
 @Injectable()
 export class EncuestasService {
@@ -27,6 +28,20 @@ export class EncuestasService {
     });
 
     const encuestaGuardada = await this.encuestasRepository.save(encuesta);
+
+    return {
+      id: encuestaGuardada.id,
+      codigoRespuesta: encuestaGuardada.codigoRespuesta,
+      codigoResultados: encuestaGuardada.codigoResultados,
+    };
+  }
+
+  async modificarEncuesta(dto: UpdateEncuestaDTO): Promise<{
+    id: number;
+    codigoRespuesta: string;
+    codigoResultados: string;
+  }> {
+    const encuestaGuardada = await this.encuestasRepository.save(dto);
 
     return {
       id: encuestaGuardada.id,
