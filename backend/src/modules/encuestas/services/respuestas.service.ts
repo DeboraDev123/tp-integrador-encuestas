@@ -7,7 +7,7 @@ import { Respuesta } from '../entities/respuestas.entity';
 import { RespuestasAbiertas } from '../entities/respuestas_abiertas.entity';
 import { RespuestasOpciones } from '../entities/respuestas_opciones.entity';
 import { ResponderEncuestaDto } from '../dtos/responderEncuestas/responder-encuesta.dto';
-import { CreateRespuestaDto } from "../dtos/responderEncuestas/create-respuesta";
+import { CreateRespuestaDto } from '../dtos/responderEncuestas/create-respuesta';
 
 @Injectable()
 export class RespuestasService {
