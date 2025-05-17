@@ -1,16 +1,21 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { EncuestasService } from '../../services/encuestas.service';
 import { Encuesta, Pregunta, Opcion } from '../../models/encuesta';
 
 @Component({
   selector: 'app-crear-encuesta',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './crear-encuesta.component.html',
-  styleUrl: './crear-encuesta.component.css'
+  styleUrls: ['./crear-encuesta.component.css']
 })
 export class CrearEncuestaComponent {
   encuestaForm: FormGroup;
+  step: number = 1;
+  enlaceRespuesta: string | null = null;
+  enlaceResultados: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -27,13 +32,22 @@ export class CrearEncuestaComponent {
     return this.encuestaForm.get('preguntas') as FormArray;
   }
 
+  // Paso 1: Validar y avanzar
+  continuar() {
+    if (this.encuestaForm.get('titulo')?.valid && this.encuestaForm.get('descripcion')?.valid) {
+      this.step = 2;
+    } else {
+      this.encuestaForm.get('titulo')?.markAsTouched();
+      this.encuestaForm.get('descripcion')?.markAsTouched();
+    }
+  }
+
   agregarPregunta() {
     const preguntaForm = this.fb.group({
       texto: ['', Validators.required],
       tipo: ['ABIERTA', Validators.required],
       opciones: this.fb.array([])
     });
-
     this.preguntas.push(preguntaForm);
   }
 
@@ -59,7 +73,7 @@ export class CrearEncuestaComponent {
   }
 
   onSubmit() {
-    if (this.encuestaForm.valid) {
+    if (this.encuestaForm.valid && this.preguntas.length > 0) {
       const formValue = this.encuestaForm.value;
       const preguntasConNumero = formValue.preguntas.map((pregunta: any, index: number) => {
         const preguntaFinal: any = {
@@ -83,8 +97,9 @@ export class CrearEncuestaComponent {
       };
       this.encuestasService.crearEncuesta(encuesta).subscribe({
         next: (response) => {
-          console.log('Encuesta creada:', response);
-          alert('Encuesta creada exitosamente');
+          this.enlaceRespuesta = window.location.origin + '/responder/' + response.codigoRespuesta;
+          this.enlaceResultados = window.location.origin + '/resultados/' + response.codigoResultados;
+          this.step = 3;
           this.encuestaForm.reset();
           this.preguntas.clear();
         },
@@ -94,5 +109,10 @@ export class CrearEncuestaComponent {
         }
       });
     }
+  }
+
+  copiarEnlace(enlace: string) {
+    navigator.clipboard.writeText(enlace);
+    alert('¡Enlace copiado!');
   }
 }

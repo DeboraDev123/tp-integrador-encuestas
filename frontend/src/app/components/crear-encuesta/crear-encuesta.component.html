@@ -1,70 +1,108 @@
 <div class="container mt-4">
   <div class="card">
-    <div class="card-header bg-primary text-white">
-      <h2 class="mb-0">Crear Nueva Encuesta</h2>
+    <div class="card-header">
+      <ng-container *ngIf="step === 1">
+        <h2 class="mb-0">Crear Nueva Encuesta</h2>
+      </ng-container>
+      <ng-container *ngIf="step === 2">
+        <h2 class="mb-0">Encuesta: "{{ encuestaForm.get('titulo')?.value }}"</h2>
+        <p class="encuesta-descripcion">{{ encuestaForm.get('descripcion')?.value }}</p>
+      </ng-container>
+      <ng-container *ngIf="step === 3">
+        <h2 class="mb-0 text-success">¡Encuesta creada exitosamente!</h2>
+      </ng-container>
     </div>
     <div class="card-body">
       <form [formGroup]="encuestaForm" (ngSubmit)="onSubmit()">
-        <!-- Título y Descripción -->
-        <div class="mb-4">
+        <!-- Paso 1: Título y Descripción -->
+        <div *ngIf="step === 1" class="mb-4">
           <div class="form-group">
             <label for="titulo" class="form-label">Título de la Encuesta</label>
             <input type="text" class="form-control" id="titulo" formControlName="titulo" placeholder="Ingrese el título">
+            <div *ngIf="encuestaForm.get('titulo')?.invalid && encuestaForm.get('titulo')?.touched" class="text-danger small">El título es obligatorio.</div>
           </div>
           <div class="form-group mt-3">
             <label for="descripcion" class="form-label">Descripción</label>
             <textarea class="form-control" id="descripcion" formControlName="descripcion" rows="3" placeholder="Ingrese la descripción"></textarea>
+            <div *ngIf="encuestaForm.get('descripcion')?.invalid && encuestaForm.get('descripcion')?.touched" class="text-danger small">La descripción es obligatoria.</div>
+          </div>
+          <div class="d-flex gap-2 mt-4">
+            <button type="button" class="btn btn-primary" (click)="continuar()" [disabled]="!encuestaForm.get('titulo')?.valid || !encuestaForm.get('descripcion')?.valid">
+              Crear
+            </button>
           </div>
         </div>
 
-        <!-- Preguntas -->
-        <div formArrayName="preguntas">
-          <div *ngFor="let pregunta of preguntas.controls; let i = index" [formGroupName]="i" class="card mb-3">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h5 class="mb-0">Pregunta {{i + 1}}</h5>
-              <button type="button" class="btn btn-danger btn-sm" (click)="eliminarPregunta(i)">
-                <i class="fas fa-trash"></i> Eliminar
-              </button>
-            </div>
-            <div class="card-body">
-              <div class="form-group mb-3">
-                <label class="form-label">Texto de la Pregunta</label>
-                <input type="text" class="form-control" formControlName="texto" placeholder="Ingrese la pregunta">
-              </div>
-              <div class="form-group mb-3">
-                <label class="form-label">Tipo de Pregunta</label>
-                <select class="form-select" formControlName="tipo">
-                  <option value="ABIERTA">Respuesta Abierta</option>
-                  <option value="OPCION">Opción Múltiple</option>
-                </select>
-              </div>
-
-              <!-- Opciones para preguntas de opción múltiple -->
-              <div *ngIf="pregunta.get('tipo')?.value === 'OPCION'" formArrayName="opciones">
-                <div *ngFor="let opcion of getOpciones(i).controls; let j = index" [formGroupName]="j" class="input-group mb-2">
-                  <input type="text" class="form-control" formControlName="texto" placeholder="Ingrese una opción">
-                  <button type="button" class="btn btn-outline-danger" (click)="eliminarOpcion(i, j)">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-                <button type="button" class="btn btn-outline-primary btn-sm mt-2" (click)="agregarOpcion(i)">
-                  <i class="fas fa-plus"></i> Agregar Opción
+        <!-- Paso 2: Preguntas -->
+        <div *ngIf="step === 2">
+          <div formArrayName="preguntas">
+            <div *ngFor="let pregunta of preguntas.controls; let i = index" [formGroupName]="i" class="card mb-3">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Pregunta {{i + 1}}</h5>
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarPregunta(i)">
+                  <i class="fas fa-trash"></i> Eliminar
                 </button>
               </div>
+              <div class="card-body">
+                <div class="form-group mb-3">
+                  <label class="form-label">Texto de la Pregunta</label>
+                  <input type="text" class="form-control" formControlName="texto" placeholder="Ingrese la pregunta">
+                </div>
+                <div class="form-group mb-3">
+                  <label class="form-label">Tipo de Pregunta</label>
+                  <select class="form-select" formControlName="tipo">
+                    <option value="ABIERTA">Respuesta Abierta</option>
+                    <option value="OPCION">Opción Múltiple</option>
+                  </select>
+                </div>
+
+                <!-- Opciones para preguntas de opción múltiple -->
+                <div *ngIf="pregunta.get('tipo')?.value === 'OPCION'" formArrayName="opciones">
+                  <div *ngFor="let opcion of getOpciones(i).controls; let j = index" [formGroupName]="j" class="input-group mb-2">
+                    <input type="text" class="form-control" formControlName="texto" placeholder="Ingrese una opción">
+                    <button type="button" class="btn btn-outline-danger" (click)="eliminarOpcion(i, j)">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                  <button type="button" class="btn btn-outline-primary btn-sm mt-2" (click)="agregarOpcion(i)">
+                    <i class="fas fa-plus"></i> Agregar Opción
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Botones de acción -->
-        <div class="d-flex gap-2 mt-4">
-          <button type="button" class="btn btn-success" (click)="agregarPregunta()">
-            <i class="fas fa-plus"></i> Agregar Pregunta
-          </button>
-          <button type="submit" class="btn btn-primary" [disabled]="!encuestaForm.valid">
-            <i class="fas fa-save"></i> Guardar Encuesta
-          </button>
+          <!-- Botones de acción para preguntas -->
+          <div class="d-flex gap-2 mt-4">
+            <button type="button" class="btn btn-success" (click)="agregarPregunta()">
+              <i class="fas fa-plus"></i> Agregar Pregunta
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="preguntas.length === 0 || !encuestaForm.valid">
+              <i class="fas fa-save"></i> Guardar Encuesta
+            </button>
+          </div>
         </div>
       </form>
+
+      <!-- Paso 3: Enlaces para compartir -->
+      <div *ngIf="step === 3" class="text-center">
+        <div class="alert alert-success mt-3">La encuesta fue creada correctamente.</div>
+        <div class="mb-3">
+          <strong>Enlace para responder:</strong>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" [value]="enlaceRespuesta" readonly>
+            <button class="btn btn-outline-primary" (click)="copiarEnlace(enlaceRespuesta!)" type="button">Copiar</button>
+          </div>
+        </div>
+        <div class="mb-3">
+          <strong>Enlace para ver resultados:</strong>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" [value]="enlaceResultados" readonly>
+            <button class="btn btn-outline-primary" (click)="copiarEnlace(enlaceResultados!)" type="button">Copiar</button>
+          </div>
+        </div>
+        <button class="btn btn-primary mt-3" (click)="step = 1; enlaceRespuesta = null; enlaceResultados = null;">Crear otra encuesta</button>
+      </div>
     </div>
   </div>
 </div>

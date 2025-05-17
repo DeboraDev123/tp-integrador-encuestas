@@ -1,15 +1,13 @@
 import { Routes } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
+import { CrearEncuestaComponent } from './components/crear-encuesta/crear-encuesta.component';
 
 export const routes: Routes = [
     {
-        path: '',
-        component: NavbarComponent
+        path: 'crear-encuesta',
+        component: CrearEncuestaComponent
     },
     {
         path: '**',
         redirectTo: ''
     }
-
-
 ]

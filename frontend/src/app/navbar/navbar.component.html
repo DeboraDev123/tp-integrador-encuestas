@@ -1,19 +1,9 @@
-<mat-sidenav-container class="sidenav-container">
-    <!-- Menú lateral -->
-    <mat-sidenav mode="side" opened>
-      <mat-toolbar>Menú</mat-toolbar>
-      <mat-nav-list>
-        <a mat-list-item routerLink="/crear-encuesta">Crear Encuesta</a>
-        <!-- Puedes agregar más enlaces aquí -->
-      </mat-nav-list>
-    </mat-sidenav>
-  
-    <!-- Contenido principal -->
-    <mat-sidenav-content>
-      <mat-toolbar color="primary">
-        <span>Encuestas 📝</span>
-      </mat-toolbar>
-      <!-- Aquí NO debe haber contenido principal -->
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<mat-toolbar color="primary" class="navbar">
+  <span>Creador de Encuestas Online</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/crear-encuesta">
+    <mat-icon>add</mat-icon>
+    Crear Encuesta
+  </button>
+</mat-toolbar>
   

@@ -37,6 +37,30 @@ body, .sidenav-container, .mat-sidenav-content {
   border-radius: 18px 18px 0 0;
   color: #fff;
   text-align: center;
+  padding: 1rem 0.5rem;
+}
+
+.card-header h2 {
+  color: #2563eb !important;
+  font-weight: 700;
+  font-family: var(--fuente);
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.card-header h5, .card-header h2 {
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--fuente);
+}
+
+.encuesta-descripcion {
+  color: #34495e;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 0;
+  margin-top: 0.5rem;
 }
 
 .form-control, .form-select, textarea {
@@ -59,26 +83,38 @@ body, .sidenav-container, .mat-sidenav-content {
   transition: all 0.2s;
 }
 
-.btn-success, .btn-primary {
-  background-color: var(--azul);
-  border-color: var(--azul);
-  color: #fff;
+.btn-primary, .btn-success {
+  color: #fff !important;
+  background-color: #3498db !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: background 0.2s;
 }
 
-.btn-success:hover, .btn-primary:hover {
-  background-color: #1741a6;
-  border-color: #1741a6;
+.btn-primary:hover, .btn-success:hover {
+  background-color: #217dbb !important;
 }
 
-.btn-danger {
-  background-color: #e11d48;
-  border-color: #e11d48;
-  color: #fff;
+.btn-outline-primary {
+  color: #3498db !important;
+  border-color: #3498db !important;
+  background: #fff !important;
 }
 
-.btn-danger:hover {
-  background-color: #be123c;
-  border-color: #be123c;
+.btn-outline-primary:hover {
+  background: #3498db !important;
+  color: #fff !important;
+}
+
+.btn-outline-danger {
+  color: #e74c3c !important;
+  border-color: #e74c3c !important;
+  background: #fff !important;
+}
+
+.btn-outline-danger:hover {
+  background: #e74c3c !important;
+  color: #fff !important;
 }
 
 .input-group {
@@ -88,12 +124,6 @@ body, .sidenav-container, .mat-sidenav-content {
 .form-label {
   font-weight: 500;
   color: #222;
-}
-
-.card-header h5, .card-header h2 {
-  color: #fff;
-  font-weight: 700;
-  font-family: var(--fuente);
 }
 
 @media (max-width: 700px) {
