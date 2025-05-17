@@ -1,11 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrevistas</title>
-</head>
-<body>
-    <router-outlet />
-</body>
-</html>
+<app-navbar></app-navbar>
+
+<div class="welcome-container">
+  <div class="welcome-content">
+    <h1>Bienvenido a SurveyCreator</h1>
+    <p class="subtitle">Crea encuestas profesionales de forma gratuita y sencilla</p>
+    
+    <div class="features">
+      <div class="feature-card">
+        <i class="fas fa-pencil-alt"></i>
+        <h3>Fácil de Crear</h3>
+        <p>Interfaz intuitiva para diseñar tus encuestas</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-share-alt"></i>
+        <h3>Comparte Fácilmente</h3>
+        <p>Comparte tus encuestas con un solo clic</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-chart-bar"></i>
+        <h3>Análisis en Tiempo Real</h3>
+        <p>Visualiza los resultados al instante</p>
+      </div>
+    </div>
+
+    <button class="create-survey-btn" routerLink="/crear-encuesta">
+      Crear Encuesta
+    </button>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

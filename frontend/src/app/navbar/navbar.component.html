@@ -3,9 +3,8 @@
     <mat-sidenav mode="side" opened>
       <mat-toolbar>Menú</mat-toolbar>
       <mat-nav-list>
-        <a mat-list-item href="#">Inicio</a>
-        <a mat-list-item href="#">Perfil</a>
-        <a mat-list-item href="#">Configuración</a>
+        <a mat-list-item routerLink="/crear-encuesta">Crear Encuesta</a>
+        <!-- Puedes agregar más enlaces aquí -->
       </mat-nav-list>
     </mat-sidenav>
   
@@ -14,11 +13,7 @@
       <mat-toolbar color="primary">
         <span>Encuestas 📝</span>
       </mat-toolbar>
-      
-      <div class="contenido">
-        <h1>👋 Bienvenido</h1>
-        <p>Aquí va tu contenido principal.</p>
-      </div>
+      <!-- Aquí NO debe haber contenido principal -->
     </mat-sidenav-content>
   </mat-sidenav-container>
   
