@@ -17,6 +17,7 @@
     right: 0;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding-left: 16px;
   }
   
   .spacer {
@@ -24,10 +25,21 @@
   }
   
   button {
-    margin-left: 8px;
+    padding-right: 16px;
   }
   
   mat-icon {
     margin-right: 4px;
+  }
+  
+
+  .boton-verde {
+    background-color: #4CAF50;
+    color: white;
+    margin-right: 16px;
+  }
+  
+  .boton-verde:hover {
+    background-color: #45A049;
   }
   

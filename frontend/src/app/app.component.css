@@ -1,56 +1,42 @@
 .welcome-container {
-  min-height: calc(100vh - 64px - 120px);
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 2rem;
+  min-height: calc(100vh - 64px - 100px);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 64px; /* Espacio para el navbar fijo */
+  padding: 2rem;
+  background-color: #f8f9fa;
 }
 
 .welcome-content {
   max-width: 1200px;
+  width: 100%;
   text-align: center;
-  padding: 2rem;
 }
 
-h1 {
-  font-size: 3rem;
-  color: #2c3e50;
+.welcome-content h1 {
+  font-size: 2.5rem;
+  color: #333;
   margin-bottom: 1rem;
 }
 
 .subtitle {
-  font-size: 1.5rem;
-  color: #34495e;
+  font-size: 1.2rem;
+  color: #666;
   margin-bottom: 3rem;
 }
 
 .features {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  margin-bottom: 3rem;
-}
-
-@media (max-width: 900px) {
-  .features {
-    flex-direction: column;
-    align-items: center;
-  }
-  .feature-card {
-    width: 100%;
-    max-width: 350px;
-  }
+  margin-top: 2rem;
 }
 
 .feature-card {
   background: white;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   transition: transform 0.3s ease;
 }
 
@@ -60,57 +46,39 @@ h1 {
 
 .feature-card i {
   font-size: 2.5rem;
-  color: #3498db;
+  color: #007bff;
   margin-bottom: 1rem;
 }
 
 .feature-card h3 {
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
 }
 
 .feature-card p {
-  color: #7f8c8d;
-}
-
-.create-survey-btn {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.create-survey-btn:hover {
-  background: #2980b9;
+  color: #666;
+  line-height: 1.5;
 }
 
 .footer {
-  background-color: #2c3e50;
+  background-color: #333;
   color: white;
-  padding: 1.5rem 0;
+  padding: 2rem 0;
   text-align: center;
-  position: relative;
-  bottom: 0;
-  width: 100%;
 }
 
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
 }
 
 .footer p {
   margin: 0.5rem 0;
-  font-size: 1rem;
-  color: #ecf0f1;
+  color: #ccc;
 }
 
 .footer p:first-child {
   font-weight: bold;
-  font-size: 1.1rem;
+  color: white;
 }

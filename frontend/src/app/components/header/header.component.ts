@@ -8,8 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
+  selector: 'app-header',
   imports: [
     CommonModule,
     RouterModule,
@@ -19,9 +18,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatButtonModule
   ],
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.css'
 })
-export class NavbarComponent {
+export class HeaderComponent {
 
 }
