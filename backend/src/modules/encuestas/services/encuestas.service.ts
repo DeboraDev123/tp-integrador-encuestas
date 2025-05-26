@@ -59,7 +59,7 @@ export class EncuestasService {
       .createQueryBuilder('encuesta')
       .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
       .leftJoinAndSelect('pregunta.opciones', 'preguntaOpcion')
-      .c
+      .where('encuesta.id = :id', { id });
 
     switch (codigoTipo) {
       case CodigoTipoEnum.RESPUESTA:
