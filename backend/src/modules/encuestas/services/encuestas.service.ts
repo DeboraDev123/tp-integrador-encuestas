@@ -59,7 +59,7 @@ export class EncuestasService {
       .createQueryBuilder('encuesta')
       .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
       .leftJoinAndSelect('pregunta.opciones', 'preguntaOpcion')
-      .where('encuesta.id = :id', { id });
+      .c
 
     switch (codigoTipo) {
       case CodigoTipoEnum.RESPUESTA:
@@ -75,6 +75,23 @@ export class EncuestasService {
     query.addOrderBy('preguntaOpcion.numero', 'ASC');
 
     const encuesta = await query.getOne();
+
+    if (!encuesta) {
+      throw new BadRequestException('Datos de encuesta no válidos');
+    }
+
+    return encuesta;
+  }
+
+  async obtenerTodasLasEncuestas(): Promise<Encuesta[]> {
+    const query = this.encuestasRepository
+      .createQueryBuilder('encuesta')
+      .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
+      .leftJoinAndSelect('pregunta.opciones', 'preguntaOpcion');
+    query.orderBy('pregunta.numero', 'ASC');
+    query.addOrderBy('preguntaOpcion.numero', 'ASC');
+
+    const encuesta = await query.getMany();
 
     if (!encuesta) {
       throw new BadRequestException('Datos de encuesta no válidos');

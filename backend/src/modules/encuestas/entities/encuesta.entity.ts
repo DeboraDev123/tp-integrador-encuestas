@@ -26,4 +26,6 @@ export class Encuesta {
     cascade: ['insert'],
   })
   respuestas: Respuesta[];
+  @Column({ nullable: true })
+  estado: number;
 }

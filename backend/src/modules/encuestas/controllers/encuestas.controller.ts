@@ -40,6 +40,11 @@ export class EncuestasController {
     );
   }
 
+  @Get(':obtener/todas')
+  async obtenerTodasLasEncuestas(): Promise<Encuesta[]> {
+    return await this.encuestasService.obtenerTodasLasEncuestas();
+  }
+
   @Delete(':id')
   async eliminarEncuesta(@Param('id') id: number): Promise<void> {
     return await this.encuestasService.eliminarEncuesta(id);
