@@ -83,6 +83,22 @@ export class EncuestasService {
     return encuesta;
   }
 
+
+  async obtenerTodasLasEncuestas(): Promise<Encuesta[]> {
+    const query = this.encuestasRepository
+      .createQueryBuilder('encuesta')
+      .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
+      .leftJoinAndSelect('pregunta.opciones', 'preguntaOpcion');
+    query.orderBy('pregunta.numero', 'ASC');
+    query.addOrderBy('preguntaOpcion.numero', 'ASC');
+
+    const encuesta = await query.getMany();
+    if (!encuesta) {
+      throw new BadRequestException('Datos de encuesta no válidos');
+    }
+
+    return encuesta;
+  }
   async obtenerPreguntasParaResponder(
     id: number,
     codigo: string,
@@ -99,6 +115,7 @@ export class EncuestasService {
 
     const encuesta = await query.getOne();
 
+
     if (!encuesta) {
       throw new BadRequestException('Datos de encuesta no válidos');
     }
@@ -106,7 +123,9 @@ export class EncuestasService {
     return encuesta;
   }
 
+
   async eliminarEncuesta(id: number): Promise<void> {
+
     await this.encuestasRepository
       .createQueryBuilder('encuesta')
       .innerJoinAndSelect('encuesta.preguntas', 'pregunta')

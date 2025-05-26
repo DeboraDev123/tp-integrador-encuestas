@@ -4,6 +4,7 @@ import {
   ArrayNotEmpty,
   IsArray,
   IsNotEmpty,
+  IsNumber,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -15,6 +16,10 @@ export class CreateEncuestaDTO {
   @IsString()
   @IsNotEmpty()
   nombre: string;
+
+  @ApiProperty()
+  @IsNumber()
+  estado: number = 1;
 
   @ApiProperty({ type: [CreatePreguntaDTO] })
   @IsArray()
