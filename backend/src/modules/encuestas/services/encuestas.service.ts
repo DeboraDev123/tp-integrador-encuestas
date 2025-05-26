@@ -83,6 +83,7 @@ export class EncuestasService {
     return encuesta;
   }
 
+
   async obtenerTodasLasEncuestas(): Promise<Encuesta[]> {
     const query = this.encuestasRepository
       .createQueryBuilder('encuesta')
@@ -92,6 +93,28 @@ export class EncuestasService {
     query.addOrderBy('preguntaOpcion.numero', 'ASC');
 
     const encuesta = await query.getMany();
+    if (!encuesta) {
+      throw new BadRequestException('Datos de encuesta no válidos');
+    }
+
+    return encuesta;
+  }
+  async obtenerPreguntasParaResponder(
+    id: number,
+    codigo: string,
+  ): Promise<Encuesta> {
+    const query = this.encuestasRepository
+      .createQueryBuilder('encuesta')
+      .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
+      .leftJoinAndSelect('pregunta.opciones', 'preguntaOpcion')
+      .where('encuesta.id = :id', { id })
+      .andWhere('encuesta.codigoRespuesta = :codigo', { codigo });
+
+    query.orderBy('pregunta.numero', 'ASC');
+    query.addOrderBy('preguntaOpcion.numero', 'ASC');
+
+    const encuesta = await query.getOne();
+
 
     if (!encuesta) {
       throw new BadRequestException('Datos de encuesta no válidos');
@@ -100,16 +123,9 @@ export class EncuestasService {
     return encuesta;
   }
 
-  async   eliminarEncuesta(
-    id: number
-  ): Promise<void> {
-    
-    // await this.encuestasRepository
-    // .createQueryBuilder('encuesta')
-    // .delete()
-    // .where("encuesta.id = :id", { id: id })
-    // .execute();
-    
+
+  async eliminarEncuesta(id: number): Promise<void> {
+
     await this.encuestasRepository
       .createQueryBuilder('encuesta')
       .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
@@ -117,16 +133,13 @@ export class EncuestasService {
       .where('encuesta.id = :id', { id })
       .delete()
       .execute();
-    // const encuesta = await query.getOne();
-    // await this.encuestasRepository.delete(encuesta);    
   }
 
-
-  async obtenerEncuestaToken(token: string) : Promise<Encuesta> {
+  async obtenerEncuestaToken(token: string): Promise<Encuesta> {
     const encuesta = await this.encuestasRepository.createQueryBuilder('encuesta')
-    .where('encuesta.codigoResultados = :token', { token })
-    .orWhere('encuesta.codigoRespuesta = :token', { token })
-    .getOne();
+      .where('encuesta.codigoResultados = :token', { token })
+      .orWhere('encuesta.codigoRespuesta = :token', { token })
+      .getOne();
 
     if (!encuesta) {
       throw new BadRequestException('Token no válido');
@@ -134,11 +147,10 @@ export class EncuestasService {
 
     const esResultado = encuesta.codigoResultados === token;
 
-  return this.obtenerEncuesta(
-    encuesta.id,
-    token,
-    esResultado ? CodigoTipoEnum.RESULTADOS : CodigoTipoEnum.RESPUESTA
-  );
-
+    return this.obtenerEncuesta(
+      encuesta.id,
+      token,
+      esResultado ? CodigoTipoEnum.RESULTADOS : CodigoTipoEnum.RESPUESTA
+    );
   }
 }

@@ -1,18 +1,54 @@
-<div class="text-center">
-    <div class="alert alert-success mt-3">La encuesta fue creada correctamente.</div>
-    <div class="mb-3">
-        <strong>Enlace para responder:</strong>
-        <div class="input-group mb-2">
-        <input type="text" class="form-control"  readonly>
-        <button class="btn btn-outline-primary" type="button">Copiar</button>
-        </div>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>Enlaces de la Encuesta</h2>
     </div>
-    <div class="mb-3">
-        <strong>Enlace para ver resultados:</strong>
-        <div class="input-group mb-2">
-        <input type="text" class="form-control" readonly>
-        <button class="btn btn-outline-primary" type="button">Copiar</button>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0">Enlace para Responder</h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Comparte este enlace con las personas que quieras que respondan la encuesta:</p>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" [value]="enlaceRespuesta" readonly>
+                <button class="btn btn-outline-primary" type="button" (click)="copiarEnlace(enlaceRespuesta)">
+                  <i class="fas fa-copy"></i> Copiar
+                </button>
+                <a [href]="enlaceRespuesta" target="_blank" class="btn btn-primary">
+                  <i class="fas fa-external-link-alt"></i> Abrir
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0">Enlace para Ver Resultados</h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Este enlace te permite ver los resultados de la encuesta:</p>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" [value]="enlaceResultados" readonly>
+                <button class="btn btn-outline-success" type="button" (click)="copiarEnlace(enlaceResultados)">
+                  <i class="fas fa-copy"></i> Copiar
+                </button>
+                <a [href]="enlaceResultados" target="_blank" class="btn btn-success">
+                  <i class="fas fa-external-link-alt"></i> Abrir
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <a routerLink="/" class="btn btn-primary">Volver al Inicio</a>
+      </div>
     </div>
-    <button class="btn btn-primary mt-3" routerLink="/''">Crear otra encuesta</button>
+  </div>
 </div>

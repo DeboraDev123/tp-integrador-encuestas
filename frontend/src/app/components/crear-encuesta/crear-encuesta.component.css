@@ -1,0 +1,134 @@
+:root {
+  --azul: #2563eb;
+  --gris-fondo: #f4f4f7;
+  --gris-borde: #e0e0e0;
+  --fuente: 'Roboto', Arial, sans-serif;
+}
+
+body, .sidenav-container, .mat-sidenav-content {
+  background: var(--gris-fondo) !important;
+  font-family: var(--fuente);
+}
+
+.main-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  margin-top: 0 !important;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--gris-borde);
+  background: #fff;
+  color: #222;
+  border-radius: 18px;
+}
+
+.card-header {
+  background-color: var(--azul) !important;
+  border-radius: 18px 18px 0 0;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0.5rem;
+}
+
+.card-header h2 {
+  color: #2563eb !important;
+  font-weight: 700;
+  font-family: var(--fuente);
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.card-header h5, .card-header h2 {
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--fuente);
+}
+
+.encuesta-descripcion {
+  color: #34495e;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+}
+
+.form-control, .form-select, textarea {
+  background: #f8fafc;
+  color: #222;
+  border: 1px solid var(--gris-borde);
+  font-family: var(--fuente);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+}
+
+.btn {
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-family: var(--fuente);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-primary, .btn-success {
+  color: #fff !important;
+  background-color: #3498db !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: background 0.2s;
+}
+
+.btn-primary:hover, .btn-success:hover {
+  background-color: #217dbb !important;
+}
+
+.btn-outline-primary {
+  color: #3498db !important;
+  border-color: #3498db !important;
+  background: #fff !important;
+}
+
+.btn-outline-primary:hover {
+  background: #3498db !important;
+  color: #fff !important;
+}
+
+.btn-outline-danger {
+  color: #e74c3c !important;
+  border-color: #e74c3c !important;
+  background: #fff !important;
+}
+
+.btn-outline-danger:hover {
+  background: #e74c3c !important;
+  color: #fff !important;
+}
+
+.input-group {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #222;
+}
+
+@media (max-width: 700px) {
+  .container {
+    max-width: 98vw;
+    padding: 0 0.5rem;
+  }
+}

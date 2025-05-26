@@ -1,54 +1,45 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { EncuestasService } from '../../services/encuestas.service';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Encuesta, Pregunta, Opcion } from '../../models/encuesta';
 
 @Component({
-  selector: 'app-crear-preguntas',
+  selector: 'app-crear-encuesta',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './crear-preguntas.component.html',
-  styleUrl: './crear-preguntas.component.css'
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './crear-encuesta.component.html',
+  styleUrls: ['./crear-encuesta.component.css']
 })
-export class CrearPreguntasComponent {
+export class CrearEncuestaComponent {
+  encuestaForm: FormGroup;
+  step: number = 1;
+  enlaceRespuesta: string | null = null;
+  enlaceResultados: string | null = null;
+
   constructor(
     private fb: FormBuilder,
-    private encuestasService: EncuestasService,
-    private toastr: ToastrService,
-    private router: Router
+    private encuestasService: EncuestasService
   ) {
     this.encuestaForm = this.fb.group({
       titulo: ['', Validators.required],
+      descripcion: ['', Validators.required],
       preguntas: this.fb.array([])
     });
   }
-
-  step: number = 1;
-  encuestaForm: FormGroup;
 
   get preguntas() {
     return this.encuestaForm.get('preguntas') as FormArray;
   }
 
+  // Paso 1: Validar y avanzar
   continuar() {
-    if (this.encuestaForm.get('titulo')?.valid) {
+    if (this.encuestaForm.get('titulo')?.valid && this.encuestaForm.get('descripcion')?.valid) {
       this.step = 2;
     } else {
       this.encuestaForm.get('titulo')?.markAsTouched();
+      this.encuestaForm.get('descripcion')?.markAsTouched();
     }
-  }
-
-  agregarOpcion(preguntaIndex: number) {
-    const opciones = this.getOpciones(preguntaIndex);
-    const opcionForm = this.fb.group({
-      texto: ['', Validators.required]
-    });
-    opciones.push(opcionForm);
   }
 
   agregarPregunta() {
@@ -64,13 +55,21 @@ export class CrearPreguntasComponent {
     this.preguntas.removeAt(index);
   }
 
+  getOpciones(preguntaIndex: number) {
+    return this.preguntas.at(preguntaIndex).get('opciones') as FormArray;
+  }
+
+  agregarOpcion(preguntaIndex: number) {
+    const opciones = this.getOpciones(preguntaIndex);
+    const opcionForm = this.fb.group({
+      texto: ['', Validators.required]
+    });
+    opciones.push(opcionForm);
+  }
+
   eliminarOpcion(preguntaIndex: number, opcionIndex: number) {
     const opciones = this.getOpciones(preguntaIndex);
     opciones.removeAt(opcionIndex);
-  }
-
-  getOpciones(preguntaIndex: number) {
-    return this.preguntas.at(preguntaIndex).get('opciones') as FormArray;
   }
 
   onSubmit() {
@@ -96,17 +95,24 @@ export class CrearPreguntasComponent {
         nombre: formValue.titulo,
         preguntas: preguntasConNumero
       };
-
       this.encuestasService.crearEncuesta(encuesta).subscribe({
         next: (response) => {
-          this.toastr.success('Encuesta creada exitosamente', 'Éxito');
-          this.router.navigate(['/enlaces', response.id, response.codigoRespuesta, response.codigoResultados]);
+          this.enlaceRespuesta = window.location.origin + '/responder/' + response.codigoRespuesta;
+          this.enlaceResultados = window.location.origin + '/resultados/' + response.codigoResultados;
+          this.step = 3;
+          this.encuestaForm.reset();
+          this.preguntas.clear();
         },
         error: (error) => {
           console.error('Error al crear la encuesta:', error);
-          this.toastr.error('Error al crear la encuesta', 'Error');
+          alert('Error al crear la encuesta');
         }
       });
     }
+  }
+
+  copiarEnlace(enlace: string) {
+    navigator.clipboard.writeText(enlace);
+    alert('¡Enlace copiado!');
   }
 }
