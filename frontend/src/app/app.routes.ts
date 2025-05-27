@@ -4,6 +4,7 @@ import { CrearPreguntasComponent } from './components/crear-preguntas/crear-preg
 import { EnlacesCompartirComponent } from './components/enlaces-compartir/enlaces-compartir.component';
 import { ResponderEncuestaComponent } from './components/responder-encuesta/responder-encuesta.component';
 import { VerResultadosComponent } from './components/ver-resultados/ver-resultados.component';
+import { VerTodasComponent } from './components/ver-todas/ver-todas.component';
 
 export const routes: Routes = [
     {
@@ -13,6 +14,10 @@ export const routes: Routes = [
     {
         path: 'crearEncuestas',
         component: CrearPreguntasComponent,
+    },
+    {
+        path: 'verEncuestas',
+        component: VerTodasComponent,
     },
     {
         path: 'enlaces/:id/:codigoRespuesta/:codigoResultados',

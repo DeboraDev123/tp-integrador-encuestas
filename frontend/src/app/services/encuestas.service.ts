@@ -34,4 +34,8 @@ export class EncuestasService {
   eliminarEncuesta(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/eliminar/${id}`);
   }
+
+  obtenerTodasLasEncuestas(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/obtener/todas`);
+  }
 }

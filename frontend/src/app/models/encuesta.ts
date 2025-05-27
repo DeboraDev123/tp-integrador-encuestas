@@ -18,3 +18,12 @@ export interface Encuesta {
   codigoRespuesta?: string;
   codigoResultados?: string;
 }
+
+export interface EncuestaDos {
+  id?: number;
+  nombre: string;
+  descripcion: string;
+  preguntas: Pregunta[];
+  codigoRespuesta?: string;
+  codigoResultados?: string;
+}
