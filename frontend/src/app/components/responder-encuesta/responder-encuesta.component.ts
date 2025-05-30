@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResponderEncuesta } from '../../services/responderEncuesta.services';
+import { RespuestasServices } from '../../services/respuestas.services';
 // import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -24,7 +24,7 @@ export class ResponderEncuestaComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private encuestasService: ResponderEncuesta,
+    private encuestasService: RespuestasServices,
     // private toastr: ToastrService
   ) {
     this.encuestaForm = this.fb.group({

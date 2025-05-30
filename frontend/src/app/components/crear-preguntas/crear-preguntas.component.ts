@@ -4,7 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { tiposPreguntaPresentacion } from '../../enums/tipoRespuesta';
 import { CreateEncuestaDTO } from '../../interfaces/crear-encuesta/create-encuesta.dto';
-import { CrearPreguntas } from '../../services/crearPreguntas.service';
+import { EncuestasService } from '../../services/encuestas.services';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { HeaderComponent } from "../header/header.component";
@@ -26,7 +26,7 @@ export class CrearPreguntasComponent {
   tiposPregunta = tiposPreguntaPresentacion
   private messageService: MessageService = inject(MessageService);
   private router: Router = inject(Router);
-  private encuestasService : CrearPreguntas = inject(CrearPreguntas)
+  private encuestasService : EncuestasService = inject(EncuestasService)
 
   constructor(private fb: FormBuilder) {
 
