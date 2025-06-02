@@ -26,7 +26,7 @@
                   </textarea>
                 </div>
 
-                <div *ngIf="pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE'">
+                <div *ngIf="pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE' || pregunta.tipo === 'VERDADERO_FALSO'">
                   <div *ngFor="let opcion of pregunta.opciones" class="form-check">
                     <input
                       class="form-check-input"
@@ -53,8 +53,6 @@
                     </label>
                   </div>
                 </div>                
-
-                
               </div>
             </div>
           </div>
