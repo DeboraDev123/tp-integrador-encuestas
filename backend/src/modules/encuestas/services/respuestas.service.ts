@@ -94,12 +94,17 @@ export class RespuestasService {
           pregunta: { id: item.idPregunta },
         });
         await this.respuestasAbiertasRepository.save(nuevaRespuestaAbierta);
-      } else if (item.tipo === 'OPCION') {
-        const nuevaRespuestaOpcion = this.respuestasOpcionesRepository.create({
-          opcion: { id: item.idOpcion },
-          respuesta: nuevaRespuesta,
-        });
-        await this.respuestasOpcionesRepository.save(nuevaRespuestaOpcion);
+      } else if (item.tipo === 'OPCION' && item.idOpcion) {
+        const idsOpciones = Array.isArray(item.idOpcion) ? item.idOpcion : [item.idOpcion];
+      
+        for (const idOpcion of idsOpciones) {
+          const nuevaRespuestaOpcion = this.respuestasOpcionesRepository.create({
+            opcion: { id: idOpcion },
+            respuesta: nuevaRespuesta,
+          });
+          await this.respuestasOpcionesRepository.save(nuevaRespuestaOpcion);
+          }
+          
       } else {
         throw new Error(`Tipo de respuesta no válido: ${item.tipo}`);
       }

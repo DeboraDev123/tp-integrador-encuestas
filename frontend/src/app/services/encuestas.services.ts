@@ -9,6 +9,7 @@ import { CodigoTipoEnum } from '../enums/tipoRespuesta';
 export class EncuestasService {
   private httpClient = inject(HttpClient);
 
+  
   crearEncuesta(dto: CreateEncuestaDTO): Observable<{
     id: number;
     codigoRespuesta: string;
