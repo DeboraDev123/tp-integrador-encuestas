@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CreateEncuestaDTO } from "../interfaces/crear-encuesta/create-encuesta.dto";
 import { ObtenerEncuestaResponse } from '../interfaces/obtener-encuesta/obtener-encuesta.dto';
 import { CodigoTipoEnum } from '../enums/tipoRespuesta';
+import { ResultadosDTO } from '../interfaces/ver-resultados/DTOS/resultados.dto';
 
 @Injectable({ providedIn: 'root'})
 export class EncuestasService {
@@ -20,6 +21,10 @@ export class EncuestasService {
         codigoRespuesta: string;
         codigoResultados: string;
         }>("/api/v1/encuestas", dto);
+    }
+
+    obtenerResultadosEncuesta(codigoResultados: string): Observable<ResultadosDTO> {
+      return this.httpClient.get<ResultadosDTO>(`/api/v1/encuestas/resultados/${codigoResultados}`);
     }
 
     // AGREGAR AQUI LOS OTROS METODOS DE LA API
