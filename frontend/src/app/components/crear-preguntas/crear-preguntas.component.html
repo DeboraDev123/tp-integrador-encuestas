@@ -45,7 +45,7 @@
                                     <div class="form-group mb-3">
                                         <label class="form-label">Tipo de Pregunta</label>
                                         <div>
-                                            <select formControlName="tipo">
+                                            <select class="form-select" formControlName="tipo">
                                                 <option *ngFor="let tipo of tiposPregunta" [value]="tipo.tipo">
                                                 {{ tipo.presentacion }}
                                                 </option>

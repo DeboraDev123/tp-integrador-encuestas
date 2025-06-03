@@ -133,20 +133,51 @@
     }
   }
   
-  .grilla {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
+  .lista-encuestas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
   
-  .tarjeta {
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  .item-encuesta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
   }
+  
+  .item-encuesta h4 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .item-encuesta small {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .item-encuesta button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .item-encuesta button:hover {
+    background-color: #c9302c;
+  }
+  
+  .item-encuesta .info {
+    display: flex;
+    flex-direction: column;
+  }
+  
   button {
     margin: 0.5rem;
     padding: 0.5rem 1rem;
