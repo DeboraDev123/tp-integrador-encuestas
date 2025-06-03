@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from 'rxjs';
 import { CreateEncuestaDTO } from "../interfaces/crear-encuesta/create-encuesta.dto";
+import { EncuestaDTO } from "../interfaces/crear-encuesta/DTOS/encuesta.dto";
 import { ObtenerEncuestaResponse } from '../interfaces/obtener-encuesta/obtener-encuesta.dto';
 import { CodigoTipoEnum } from '../enums/tipoRespuesta';
 import { ResultadosDTO } from '../interfaces/ver-resultados/DTOS/resultados.dto';
@@ -29,11 +30,13 @@ export class EncuestasService {
 
     // AGREGAR AQUI LOS OTROS METODOS DE LA API
 
-    
-    
+    obtenerTodasLasEncuestas(): Observable<EncuestaDTO[]>{
+      return this.httpClient.get<EncuestaDTO[]>("/api/v1/encuestas/obtener/todas");
+    }
 
-
-
+    eliminarEncuesta(id: number): Observable<any> {
+      return this.httpClient.delete("/api/v1/encuestas/" + id);
+    }
 
   }
 
@@ -60,10 +63,3 @@ export class EncuestasService {
   //   return this.http.put(this.apiUrl, encuesta);
   // }
 
-  // eliminarEncuesta(id: number): Observable<any> {
-  //   return this.http.delete(`${this.apiUrl}/eliminar/${id}`);
-  // }
-
-  // obtenerTodasLasEncuestas(): Observable<any> {
-  //   return this.http.get(`${this.apiUrl}/obtener/todas`);
-  // }

@@ -1,22 +1,19 @@
-<div class="container mt-4">
-    <br><br><br>
-    <div class="card mt-4">
-      <div class="card-header">
-          <h2 class="mb-0">Todas las encuestas</h2>
-      </div>
-      <div class="card-body">
-        <div class="grilla">
-            <div class="tarjeta" *ngFor="let encuesta of encuestas">
-              <h3>{{ encuesta.nombre }}</h3>
-              <p>{{ encuesta.descripcion }}</p>
-              
-              <button (click)="editarProducto(encuesta)">Editar</button>
-              <button (click)="eliminarProducto(encuesta)">Eliminar</button>
-            </div>
-          </div>
-          
-        
-      </div>
+
+<div class="container mt-0 mb-4">
+  <div class="card mt-4">
+    <div class="card-header">
+      <h2 class="mb-0">Todas las encuestas</h2>
     </div>
-  </div><br>
-  
+    <div class="card-body">
+      <ul class="lista-encuestas">
+        <li *ngFor="let encuesta of encuestas" class="item-encuesta">
+          <div class="info">
+            <h4>{{ encuesta.nombre }}</h4>
+          </div>
+          <button (click)="eliminarEncuesta(encuesta)">Eliminar</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<app-footer/>
