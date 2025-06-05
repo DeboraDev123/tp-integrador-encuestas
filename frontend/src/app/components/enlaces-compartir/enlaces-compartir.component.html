@@ -21,6 +21,11 @@
                   <i class="fas fa-external-link-alt"></i> Abrir
                 </a>
               </div>
+
+              <!-- QR RESPUESTA -->
+              <div class="text-center mt-3">
+                <qrcode [qrdata]="urlRespuesta" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+              </div>
             </div>
           </div>
         </div>
@@ -40,6 +45,11 @@
                 <a [href]="codigoResultados" target="_blank" class="btn btn-success">
                   <i class="fas fa-external-link-alt"></i> Abrir
                 </a>
+              </div>
+
+              <!-- QR RESULTADOS -->
+              <div class="text-center mt-3">
+                <qrcode [qrdata]="urlResultados" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
               </div>
             </div>
           </div>

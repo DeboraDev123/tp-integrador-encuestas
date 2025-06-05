@@ -3,6 +3,9 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import Swal from 'sweetalert2';
+import { QRCodeComponent } from 'angularx-qrcode';
+
+
 
 
 
@@ -11,6 +14,7 @@ import Swal from 'sweetalert2';
   imports: [
     RouterModule,
     CommonModule,
+    QRCodeComponent,
   ],
   templateUrl: './enlaces-compartir.component.html',
   styleUrl: './enlaces-compartir.component.css',
@@ -20,9 +24,10 @@ export class EnlacesCompartirComponent {
   private router: Router = inject(Router);
 
   constructor(private route: ActivatedRoute,) {}
-  idEncuesta: String = '';
-  codigoRespuesta: String = '';
-  codigoResultados: String = '';
+  idEncuesta: string = '';
+  codigoRespuesta: string = '';
+  codigoResultados: string = '';
+
 
   // RECUPERAR VALUE PARAMS
   ngOnInit(): void {
@@ -41,6 +46,15 @@ export class EnlacesCompartirComponent {
     this.codigoResultados = params['codigo-resultados'];
     });
   }
+
+  // Genera la url completa para los QR
+  get urlRespuesta(): string {
+    return `${window.location.origin}/responder/${this.idEncuesta}/${this.codigoRespuesta}/RESPUESTA`;
+  }
+  
+  get urlResultados(): string {
+    return `${window.location.origin}/resultados/${this.idEncuesta}/${this.codigoResultados}/RESULTADOS`;
+  } 
 
 
   copiarAlPortapapeles(tipo: 'respuesta' | 'resultados'){
