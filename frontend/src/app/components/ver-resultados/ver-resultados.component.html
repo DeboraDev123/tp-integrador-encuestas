@@ -1,50 +1,50 @@
-<div class="main-content container mt-4">
-  <div class="card" *ngIf="!loading">
-    <div class="card-header">
-      <h2>{{ encuesta.nombre }}</h2>
-      <p class="text-muted">Total de respuestas: {{ totalRespuestas }}</p>
-    </div>
-    <div class="card-body">
-      <ng-container *ngIf="encuesta.respuestas && encuesta.respuestas.length > 0; else sinRespuestas">
-        <div class="pregunta" *ngFor="let pregunta of encuesta.preguntas">
-          <h3 class="pregunta-titulo">{{ pregunta.texto }}</h3>
-          
-          <!-- Preguntas de opción múltiple -->
-          <div *ngIf="pregunta.tipo === 'OPCION'" class="opciones">
-            <div class="opcion" *ngFor="let opcion of getOpcionesUnicas(pregunta.id)">
-              <div class="opcion-header">
-                <span class="opcion-texto">{{ opcion }}</span>
-                <span class="opcion-porcentaje">{{ getPorcentajeOpcion(pregunta.id, opcion) | number:'1.0-0' }}%</span>
-              </div>
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" 
-                     [style.width.%]="getPorcentajeOpcion(pregunta.id, opcion)"
-                     [attr.aria-valuenow]="getPorcentajeOpcion(pregunta.id, opcion)"
-                     aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="main-content container mt-4" *ngIf="!loading; else cargando">
+  <h2 class="mb-4">{{ encuesta.nombre }}</h2>
+  <p><strong>Total de respuestas:</strong> {{ encuesta.respuestas?.length }}</p>
 
-          <!-- Preguntas abiertas -->
-          <div *ngIf="pregunta.tipo === 'ABIERTA'" class="respuestas-abiertas">
-            <div class="respuesta" *ngFor="let respuesta of getRespuestasAbiertas(pregunta.id)">
-              <p class="respuesta-texto">{{ respuesta }}</p>
-            </div>
+  <ng-container *ngFor="let r of encuesta.respuestas">
+    <div
+      class="card mb-4 shadow-sm"
+      *ngIf="r.respuestasAbiertas?.length || r.respuestasOpciones?.length"
+    >
+      <div class="card-body">
+        <!-- Respuestas abiertas -->
+        <div *ngFor="let ra of r.respuestasAbiertas" class="mb-3">
+          <h6 class="fw-bold">{{ ra.pregunta?.texto }}</h6>
+          <input
+            type="text"
+            class="form-control"
+            [value]="ra.texto"
+            disabled
+            readonly
+          />
+        </div>
+
+        <!-- Respuestas con opciones -->
+        <div *ngIf="r.respuestasOpciones?.length">
+          <h6 class="fw-bold">
+            {{ r.respuestasOpciones[0]?.opcion?.pregunta?.texto }}
+          </h6>
+
+          <div *ngFor="let ro of r.respuestasOpciones" class="form-check mb-2">
+            <input
+              [type]="r.respuestasOpciones[0]?.opcion?.pregunta?.tipo === 'OPCION_MULTIPLE_SELECCION_MULTIPLE' ? 'checkbox' : 'radio'"
+              class="form-check-input"
+              [checked]="true"
+              disabled
+            />
+            <label class="form-check-label">{{ ro.opcion?.texto }}</label>
           </div>
         </div>
-      </ng-container>
-      <ng-template #sinRespuestas>
-        <div class="alert alert-info text-center mt-4">
-          Aún no hay respuestas para esta encuesta.
-        </div>
-      </ng-template>
+      </div>
     </div>
-  </div>
+  </ng-container>
+</div>
 
-  <div class="loading" *ngIf="loading">
+<ng-template #cargando>
+  <div class="d-flex justify-content-center py-5">
     <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Cargando...</span>
+      <span class="visually-hidden">Cargando…</span>
     </div>
   </div>
-</div> 
+</ng-template>

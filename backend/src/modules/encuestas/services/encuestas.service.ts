@@ -51,37 +51,58 @@ export class EncuestasService {
   }
 
   async obtenerEncuesta(
-    id: number,
-    codigo: string,
-    codigoTipo: CodigoTipoEnum.RESPUESTA | CodigoTipoEnum.RESULTADOS,
-  ): Promise<Encuesta> {
-    const query = this.encuestasRepository
-      .createQueryBuilder('encuesta')
-      .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
-      .leftJoinAndSelect('pregunta.opciones', 'preguntaOpcion')
-      .where('encuesta.id = :id', { id });
-
-    switch (codigoTipo) {
-      case CodigoTipoEnum.RESPUESTA:
-        query.andWhere('encuesta.codigoRespuesta = :codigo', { codigo });
-        break;
-
-      case CodigoTipoEnum.RESULTADOS:
-        query.andWhere('encuesta.codigoResultados = :codigo', { codigo });
-        break;
-    }
-
-    query.orderBy('pregunta.numero', 'ASC');
-    query.addOrderBy('preguntaOpcion.numero', 'ASC');
-
-    const encuesta = await query.getOne();
-
-    if (!encuesta) {
-      throw new BadRequestException('Datos de encuesta no válidos');
-    }
-
-    return encuesta;
+  id: number,
+  codigo: string,
+  codigoTipo: CodigoTipoEnum.RESPUESTA | CodigoTipoEnum.RESULTADOS,
+): Promise<Encuesta> {
+  // console.log(codigo)
+  // console.log(codigoTipo)
+  
+  // Para resultados, usar método específico
+  if (codigoTipo === CodigoTipoEnum.RESULTADOS) {
+    return this.obtenerResultadosEncuesta(id, codigo);
   }
+
+  // Para respuestas (participar), método normal
+  const query = this.encuestasRepository
+    .createQueryBuilder('encuesta')
+    .innerJoinAndSelect('encuesta.preguntas', 'pregunta')
+    .leftJoinAndSelect('pregunta.opciones', 'preguntaOpcion')
+    .where('encuesta.id = :id', { id })
+    .andWhere('encuesta.codigoRespuesta = :codigo', { codigo });
+
+  query.orderBy('pregunta.numero', 'ASC');
+  query.addOrderBy('preguntaOpcion.numero', 'ASC');
+
+  const encuesta = await query.getOne();
+
+  if (!encuesta) {
+    throw new BadRequestException('Código no válido para el tipo especificado o encuesta no encontrada');
+  }
+
+  return encuesta;
+}
+
+async obtenerResultadosEncuesta(id: number, codigo: string): Promise<Encuesta> {
+  const query = this.encuestasRepository
+    .createQueryBuilder('encuesta')
+    .leftJoinAndSelect('encuesta.respuestas', 'respuesta')
+    .leftJoinAndSelect('respuesta.respuestasAbiertas', 'respuestaAbierta')
+    .leftJoinAndSelect('respuestaAbierta.pregunta', 'preguntaAbierta')
+    .leftJoinAndSelect('respuesta.respuestasOpciones', 'respuestaOpcion')
+    .leftJoinAndSelect('respuestaOpcion.opcion', 'opcionSeleccionada')
+    .leftJoinAndSelect('opcionSeleccionada.pregunta', 'preguntaOpcion')
+    .where('encuesta.id = :id', { id })
+    .andWhere('encuesta.codigoResultados = :codigo', { codigo });
+
+  const encuesta = await query.getOne();
+
+  if (!encuesta) {
+    throw new BadRequestException('Código no válido para resultados o encuesta no encontrada');
+  }
+
+  return encuesta;
+}
 
 
   async obtenerTodasLasEncuestas(): Promise<Encuesta[]> {

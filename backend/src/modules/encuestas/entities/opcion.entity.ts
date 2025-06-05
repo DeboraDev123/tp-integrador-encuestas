@@ -25,7 +25,7 @@ export class Opcion {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'id_preguntas' })
-  @Exclude()
+  // @Exclude()
   pregunta: Pregunta;
 
   @OneToMany(() => RespuestasOpciones, (resOpciones) => resOpciones.opcion)

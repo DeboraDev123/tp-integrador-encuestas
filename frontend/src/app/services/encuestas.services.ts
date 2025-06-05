@@ -24,9 +24,9 @@ export class EncuestasService {
         }>("/api/v1/encuestas", dto);
     }
 
-    obtenerResultadosEncuesta(codigoResultados: string): Observable<ResultadosDTO> {
-      return this.httpClient.get<ResultadosDTO>(`/api/v1/encuestas/resultados/${codigoResultados}`);
-    }
+    // obtenerResultadosEncuesta(codigoResultados: string): Observable<ResultadosDTO> {
+    //   return this.httpClient.get<ResultadosDTO>(`/api/v1/encuestas/resultados/${codigoResultados}`);
+    // }
 
     // AGREGAR AQUI LOS OTROS METODOS DE LA API
 
@@ -34,6 +34,7 @@ export class EncuestasService {
       return this.httpClient.get<EncuestaDTO[]>("/api/v1/encuestas/obtener/todas");
     }
 
+    
     eliminarEncuesta(id: number): Observable<any> {
       return this.httpClient.delete("/api/v1/encuestas/" + id);
     }

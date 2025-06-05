@@ -19,11 +19,11 @@ export class RespuestasAbiertas {
 
     @ManyToOne(() => Respuesta, (respuesta) => respuesta.respuestasAbiertas)
     @JoinColumn({ name: "id_respuestas" })
-    @Exclude()
+    // @Exclude()
     respuesta: Respuesta;
 
     @ManyToOne(() => Pregunta, (pregunta) => pregunta.respuestasAbiertas)
     @JoinColumn({ name: "id_pregunta" })
-    @Exclude()
+    // @Exclude()
     pregunta: Pregunta;
 }

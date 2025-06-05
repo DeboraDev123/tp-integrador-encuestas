@@ -5,11 +5,12 @@ import { MessageService } from 'primeng/api';
 import Swal from 'sweetalert2';
 
 
+
 @Component({
   selector: 'app-enlaces-compartir',
   imports: [
     RouterModule,
-    CommonModule 
+    CommonModule,
   ],
   templateUrl: './enlaces-compartir.component.html',
   styleUrl: './enlaces-compartir.component.css',

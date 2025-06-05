@@ -12,11 +12,11 @@ export class RespuestasOpciones {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'id_respuestas' })
-  @Exclude()
+  // @Exclude()
   respuesta: Respuesta;
 
   @ManyToOne(() => Opcion, (opcion) => opcion.respuestasOpciones)
   @JoinColumn({ name: 'id_opciones' })
-  @Exclude()
+  // @Exclude()
   opcion: Opcion;
 }
