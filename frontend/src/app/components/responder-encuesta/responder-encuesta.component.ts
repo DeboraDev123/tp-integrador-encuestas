@@ -111,6 +111,12 @@ export class ResponderEncuestaComponent implements OnInit {
           tipo: r.tipo,
           texto: r.respuesta
         };
+      } else if (r.tipo === 'VERDADERO_FALSO' || r.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE') {
+        return {
+          idPregunta: r.idPregunta,
+          tipo: 'OPCION',
+          idOpcion: r.respuesta
+        };
       } else {
         return {
           idPregunta: r.idPregunta,

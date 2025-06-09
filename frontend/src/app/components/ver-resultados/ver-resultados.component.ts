@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RespuestasServices } from '../../services/respuestas.services';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-ver-resultados',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './ver-resultados.component.html',
   styleUrls: ['./ver-resultados.component.css']
 })

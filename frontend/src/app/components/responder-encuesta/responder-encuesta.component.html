@@ -26,7 +26,19 @@
                   </textarea>
                 </div>
 
-                <div *ngIf="pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE' || pregunta.tipo === 'VERDADERO_FALSO'">
+                <div *ngIf="pregunta.tipo === 'VERDADERO_FALSO'">
+                  <select class="form-select" [formControlName]="'respuesta'">
+                    <ng-container *ngIf="pregunta.opciones && pregunta.opciones.length > 0; else fallbackVF">
+                      <option *ngFor="let opcion of pregunta.opciones" [value]="opcion.id">{{ opcion.texto }}</option>
+                    </ng-container>
+                    <ng-template #fallbackVF>
+                      <option [value]="1">Verdadero</option>
+                      <option [value]="0">Falso</option>
+                    </ng-template>
+                  </select>
+                </div>
+
+                <div *ngIf="pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE'">
                   <div *ngFor="let opcion of pregunta.opciones" class="form-check">
                     <input
                       class="form-check-input"

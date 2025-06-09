@@ -65,6 +65,17 @@ export class CrearPreguntasComponent {
       tipo: ['ABIERTA', Validators.required],
       opciones: this.fb.array([])
     });
+
+    // Suscribirse a cambios en el tipo de pregunta
+    preguntaForm.get('tipo')?.valueChanges.subscribe((tipo) => {
+      const opciones = preguntaForm.get('opciones') as FormArray;
+      opciones.clear();
+      if (tipo === 'VERDADERO_FALSO') {
+        opciones.push(this.fb.group({ texto: 'Verdadero' }));
+        opciones.push(this.fb.group({ texto: 'Falso' }));
+      }
+    });
+
     this.preguntas.push(preguntaForm);
   }
 
